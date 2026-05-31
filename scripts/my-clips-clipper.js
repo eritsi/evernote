@@ -641,16 +641,16 @@
         </div>
         <div class="mc-label">GitHubユーザー名</div>
         <div class="mc-settings-row">
-          <input id="mc-owner" type="text" placeholder="username" value="${cfg.get('owner', '')}">
+          <input id="mc-owner" type="text" placeholder="eritsi" value="${cfg.get('owner', '')}">
         </div>
         <div class="mc-label">リポジトリ名</div>
         <div class="mc-settings-row">
-          <input id="mc-repo" type="text" placeholder="my-clips" value="${cfg.get('repo', '')}">
+          <input id="mc-repo" type="text" placeholder="evernote" value="${cfg.get('repo', '')}">
         </div>
         <div class="mc-label">ノートブック（1行1つ）</div>
-        <textarea class="mc-textarea" id="mc-nbs" rows="5">${cfg.get('notebooks', 'レシピ\n中華レシピ\ntastytableレシピ\nル・クルーゼ\n宿\n馬車道\nF1\nCarnet de notes de eritsi\nGoogle Professional Data Engineer\nストック')}</textarea>
+        <textarea class="mc-textarea" id="mc-nbs" rows="5">${cfg.get('notebooks', 'レシピ\n中華レシピ\ntastytableレシピ\nル・クルーゼ\n宿\nストック')}</textarea>
         <div class="mc-label">デフォルトノートブック</div>
-        <input class="mc-input" id="mc-default-nb" type="text" placeholder="ストック" value="${cfg.get('default_notebook', 'ストック')}">
+        <input class="mc-input" id="mc-default-nb" type="text" placeholder="レシピ" value="${cfg.get('default_notebook', 'ストック')}">
         <div class="mc-footer">
           <button class="mc-btn-cancel" id="mc-cancel-settings">閉じる</button>
           <button class="mc-btn-save" id="mc-save-settings">保存</button>
