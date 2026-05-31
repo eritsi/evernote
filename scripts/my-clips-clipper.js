@@ -243,33 +243,112 @@
   }
 
   // 4. ページ内の主要画像を収集（最大 MAX_IMGS 枚）
-  const MAX_IMGS = 5;
+  const MAX_IMGS = 15;
 
+  // imgタグから実際のsrcを取り出す（lazy-load各種に対応）
+  function getRealSrc(img) {
+    return img.getAttribute('data-src')
+        || img.getAttribute('data-original')
+        || img.getAttribute('data-lazy-src')
+        || img.getAttribute('data-lazyload')
+        || img.getAttribute('data-url')
+        || img.getAttribute('data-lazy')
+        || img.getAttribute('data-echo')
+        || img.getAttribute('data-image')
+        || (() => {
+             const ss = img.getAttribute('srcset') || img.getAttribute('data-srcset') || '';
+             const u = ss.split(',')[0]?.trim().split(' ')[0];
+             return u && !u.startsWith('data:') ? u : null;
+           })()
+        || (img.src && !img.src.startsWith('data:') ? img.src : null)
+        || null;
+  }
+
+  // 広告スコアリング（0=コンテンツ確実、10=広告確実）
+  function calcAdScore(imgEl, url) {
+    let score = 0;
+    // 1. 親要素のクラス/IDが広告っぽい
+    const adParent = imgEl.closest(
+      '[class*="ad-"],[class*="-ad"],[class*="ads"],[id*="ad-"],[id*="-ad"],' +
+      '[class*="banner"],[class*="sponsor"],[class*="affiliate"],[class*="promo"],' +
+      '[class*="adsense"],[data-ad],[data-dfp],[class*="advertisement"],' +
+      '[class*="related"],[class*="recommend"],[class*="widget"]'
+    );
+    if (adParent) score += 5;
+
+    // 2. URLに広告ネットワーク・トラッキング系のキーワード
+    if (/doubleclick|googlesyndication|amazon-adsystem|adserver|adnxs|criteo|taboola|outbrain|revcontent|adsystem|ad\.jp|yimg\.jp.*ad/i.test(url)) score += 8;
+
+    // 3. URLにアイコン・ロゴ系キーワード
+    if (/\/icon|\/logo|\/avatar|social|share|badge|button|\.ico($|\?)/i.test(url)) score += 4;
+
+    // 4. バナー的なアスペクト比（横長＝728x90等、縦長細い＝160x600等）
+    const w = imgEl.naturalWidth  || parseInt(imgEl.getAttribute('width')  || '0');
+    const h = imgEl.naturalHeight || parseInt(imgEl.getAttribute('height') || '0');
+    if (w > 0 && h > 0) {
+      const ratio = w / h;
+      if (ratio > 5 || ratio < 0.2) score += 4;   // 極端な縦横比
+    }
+
+    // 5. 極小画像（1x1トラッキングピクセルなど）
+    if (w > 0 && h > 0 && w < 50 && h < 50) score += 6;
+
+    return Math.min(score, 10);
+  }
+
+  // 候補画像を収集して {url, adScore} のリストを返す
   function collectImages(jsonLdRecipe) {
-    const urls = new Set();
+    const seen = new Set();
+    const candidates = [];  // {url, adScore}
 
-    // JSON-LD の image を優先
+    const addUrl = (url, score = 0) => {
+      if (!url || seen.has(url)) return;
+      seen.add(url);
+      candidates.push({ url, adScore: score });
+    };
+
     if (jsonLdRecipe) {
-      const imgs = [jsonLdRecipe.image].flat().filter(Boolean);
-      imgs.forEach(img => {
-        const u = typeof img === 'string' ? img : img.url;
-        if (u) urls.add(u);
+      // ① 完成写真：同じ写真のアスペクト比バリアント配列なので最初の1枚だけ
+      const mainImgs = [jsonLdRecipe.image].flat().filter(Boolean);
+      if (mainImgs.length > 0) {
+        const first = mainImgs[0];
+        const u = typeof first === 'string' ? first : (first.url || first.contentUrl);
+        addUrl(u, 0);
+      }
+
+      // ② 手順写真：recipeInstructions[i].image
+      const allSteps = [jsonLdRecipe.recipeInstructions].flat().filter(Boolean);
+      allSteps.forEach(step => {
+        const items = step['@type'] === 'HowToSection'
+          ? [step.itemListElement].flat().filter(Boolean)
+          : [step];
+        items.forEach(s => {
+          [s.image].flat().filter(Boolean).forEach(img => {
+            const u = typeof img === 'string' ? img : (img.url || img.contentUrl);
+            addUrl(u, 0);
+          });
+        });
       });
     }
 
-    // DOM から本文エリアの画像
+    // ③ DOMから全画像を収集（JSON-LDの補完 or フォールバック）
     const contentEl = extractArticle();
-    contentEl.querySelectorAll('img').forEach(img => {
-      const src = img.src || img.dataset.src || img.dataset.lazySrc;
-      if (!src || src.startsWith('data:')) return;
-      const rect = img.getBoundingClientRect();
-      // 200x150 以上の要素のみ（ロゴ・アイコン排除）
-      if (img.naturalWidth >= 200 || rect.width >= 200) {
-        urls.add(src);
+    contentEl.querySelectorAll('img').forEach(imgEl => {
+      const url = getRealSrc(imgEl);
+      if (!url || seen.has(url)) return;
+      const w = imgEl.naturalWidth  || parseInt(imgEl.getAttribute('width')  || '0');
+      const h = imgEl.naturalHeight || parseInt(imgEl.getAttribute('height') || '0');
+      // 極小（50px未満）は最初から除外
+      if (w > 0 && h > 0 && w < 50 && h < 50) return;
+      // サイズ不明(lazy)か200px以上のものを候補に
+      if ((w === 0 && h === 0) || w >= 200 || h >= 150) {
+        addUrl(url, calcAdScore(imgEl, url));
       }
     });
 
-    return [...urls].slice(0, MAX_IMGS);
+    // adScore でソート（0が先頭＝コンテンツ写真優先）して上限枚数に絞る
+    candidates.sort((a, b) => a.adScore - b.adScore);
+    return candidates.slice(0, MAX_IMGS);
   }
 
   // 5. GM_xmlhttpRequest で画像を base64 取得
@@ -370,8 +449,8 @@
 
     setStatus('loading', '画像を取得中…');
 
-    // 画像フェッチ
-    const imgUrls = collectImages(formData._recipe);
+    // selectedUrls: ユーザーが選択した画像URLリスト
+    const imgUrls = formData.selectedUrls || [];
     const savedImages = [];
 
     for (let i = 0; i < imgUrls.length; i++) {
@@ -511,6 +590,27 @@
       background:#B84C2A; color:#fff; font-size:14px;
       font-family:inherit; cursor:pointer;
     }
+    /* 画像グリッド */
+    .mc-img-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-top:8px;
+    }
+    .mc-img-item {
+      position:relative; aspect-ratio:1; border-radius:8px; overflow:hidden;
+      cursor:pointer; border:2.5px solid transparent; transition:opacity .15s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .mc-img-item.on  { border-color:#B84C2A; }
+    .mc-img-item.off { opacity:.3; border-color:#ccc; }
+    .mc-img-item img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+    .mc-img-chk {
+      position:absolute; top:3px; right:3px;
+      width:17px; height:17px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:10px; font-weight:700;
+    }
+    .mc-img-item.on  .mc-img-chk { background:#B84C2A; color:#fff; }
+    .mc-img-item.off .mc-img-chk { background:#999; color:#fff; }
+    .mc-img-count { font-size:12px; color:#6B6B72; margin-top:5px; }
   `;
 
   function injectStyle() {
@@ -589,6 +689,11 @@
     const body   = recipe ? recipeToMarkdown(recipe) : domToMarkdown(extractArticle()).replace(/\n{3,}/g, '\n\n').trim();
     const mode   = recipe ? '📋 JSONスキーマ検出' : '📄 記事モード';
 
+    // 画像候補収集（{url, adScore}[]）。adScore<5=コンテンツ→選択済み、>=5=広告疑い→非選択
+    const imgCandidates = collectImages(recipe);
+    // 状態管理: selected=保存する, adSuspect=広告疑いで最初は非選択
+    const imgStates = imgCandidates.map(c => ({ url: c.url, selected: c.adScore < 5 }));
+
     // ノートブック一覧
     const notebooks = (cfg.get('notebooks', 'ストック') || 'ストック').split('\n').map(s => s.trim()).filter(Boolean);
     const defaultNb = cfg.get('default_notebook', 'ストック');
@@ -619,6 +724,10 @@
           <span class="mc-badge">🔗 ${location.hostname}</span>
         </div>
 
+        <div class="mc-label" id="mc-img-label">📷 画像を選択（タップで除外）</div>
+        <div class="mc-img-grid" id="mc-img-grid"></div>
+        <div class="mc-img-count" id="mc-img-count"></div>
+
         <div id="mc-status"></div>
 
         <div class="mc-footer">
@@ -633,6 +742,34 @@
 
     overlay.addEventListener('click', e => { if (e.target === overlay) removeOverlay(); });
     document.body.appendChild(overlay);
+
+    // 画像グリッドの描画と更新
+    function renderImgGrid() {
+      const grid = document.getElementById('mc-img-grid');
+      const countEl = document.getElementById('mc-img-count');
+      if (!grid) return;
+      if (imgStates.length === 0) {
+        grid.innerHTML = '';
+        document.getElementById('mc-img-label').style.display = 'none';
+        countEl.textContent = '';
+        return;
+      }
+      grid.innerHTML = imgStates.map((s, i) => `
+        <div class="mc-img-item ${s.selected ? 'on' : 'off'}" data-i="${i}">
+          <img src="${s.url}" alt="" loading="lazy">
+          <div class="mc-img-chk">${s.selected ? '✓' : '✗'}</div>
+        </div>`).join('');
+      grid.querySelectorAll('.mc-img-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const i = parseInt(el.dataset.i);
+          imgStates[i].selected = !imgStates[i].selected;
+          renderImgGrid();
+        });
+      });
+      const n = imgStates.filter(s => s.selected).length;
+      countEl.textContent = `${n} / ${imgStates.length} 枚を保存`;
+    }
+    renderImgGrid();
 
     document.getElementById('mc-cancel').onclick = removeOverlay;
     document.getElementById('mc-open-settings').onclick = showSettingsUI;
@@ -662,12 +799,13 @@
 
       try {
         await saveNote({
-          title:   document.getElementById('mc-title').value.trim() || title,
+          title:    document.getElementById('mc-title').value.trim() || title,
           notebook: document.getElementById('mc-nb').value,
-          tags:    tagList,
-          memo:    document.getElementById('mc-memo').value,
-          _recipe: recipe,
-          _body:   body,
+          tags:     tagList,
+          memo:     document.getElementById('mc-memo').value,
+          _recipe:  recipe,
+          _body:    body,
+          selectedUrls: imgStates.filter(s => s.selected).map(s => s.url),
         }, setStatus);
       } catch (e) {
         setStatus('error', `⚠️ エラー: ${e.message || String(e)}`);

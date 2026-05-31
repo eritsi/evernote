@@ -600,6 +600,16 @@ async function openNote(id) {
       return `<img src="${eh(href)}" alt="${eh(alt)}" loading="lazy">`;
     };
 
+    // 相対リンク（/wordlist/xxx 等）はテキストのみ表示。絶対URLのみリンクにする
+    rd.link = (hrefOrToken, legacyTitle, legacyText) => {
+      const href = (typeof hrefOrToken === 'object') ? hrefOrToken.href  : hrefOrToken;
+      const text = (typeof hrefOrToken === 'object') ? (hrefOrToken.text  || '') : (legacyText  || '');
+      if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+        return `<a href="${eh(href)}" target="_blank" rel="noopener">${text}</a>`;
+      }
+      return text;  // 相対リンク → テキストのみ（404リンクを排除）
+    };
+
     const html = marked.parse(body, { renderer: rd });
 
     const tags = (note.tags||[]).map(t => `<span class="badge">${eh(t)}</span>`).join('');
