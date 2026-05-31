@@ -335,7 +335,7 @@
   </nav>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@4/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/minisearch@7/dist/umd/index.min.js"></script>
 <script>
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -589,12 +589,15 @@ async function openNote(id) {
     // カスタムレンダラー（画像URL修正）
     const rd = new marked.Renderer();
     const noteDir = note.note_dir;
-    rd.image = (href, title, text) => {
+    rd.image = (hrefOrToken, legacyTitle, legacyText) => {
+      // marked v4以前: positional args / v5以降: token object で渡ってくる
+      let href = (typeof hrefOrToken === 'object') ? hrefOrToken.href  : hrefOrToken;
+      const alt  = (typeof hrefOrToken === 'object') ? (hrefOrToken.text  || '') : (legacyText  || '');
       if (href && /^\.?\/images\//.test(href)) {
         const file = decodeURIComponent(href.split('/').pop());
         href = ep(`${noteDir}/images/${file}`);
       }
-      return `<img src="${eh(href)}" alt="${eh(text||'')}" loading="lazy">`;
+      return `<img src="${eh(href)}" alt="${eh(alt)}" loading="lazy">`;
     };
 
     const html = marked.parse(body, { renderer: rd });
