@@ -11,7 +11,7 @@ guid: 1586634a-8f13-a03b-a39c-74706974b3f6
 
 # **45min**
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-11185c99.jpg](./images/Attachment-11185c99.jpg)
 
 **Cooking description**
 
@@ -35,7 +35,7 @@ Ingredients ―  お送りする食材リスト
 
 **きのこのクリームパスタ〜トリュフ風味〜**
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-1977168f.jpg](./images/Attachment-1977168f.jpg)
 
 スパゲッティーニ200g
 
@@ -99,14 +99,14 @@ Ingredients ―  お送りする食材リスト
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-ebbd15ff.jpg](./images/Attachment-ebbd15ff.jpg)
 
 じゃがいもを水から茹でて、沸騰してから3分ほど中火で茹でる。お湯から上げて塩（小さじ1/2）を振り、10分ほどマリネしておく。
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-d31b984b.jpg](./images/Attachment-d31b984b.jpg)
+![Attachment-def513ef.jpg](./images/Attachment-def513ef.jpg)
 
 ・ローズマリーの葉を枝から外す。
 
@@ -128,13 +128,13 @@ Ingredients ―  お送りする食材リスト
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-1b98afb5.jpg](./images/Attachment-1b98afb5.jpg)
 
 身側にローズマリーの葉（半量）をちらし、皮目を外側にしてロール状にタコ糸でしばる。
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-e02e2721.jpg](./images/Attachment-e02e2721.jpg)
 
 **POINT**
 
@@ -144,7 +144,7 @@ Ingredients ―  お送りする食材リスト
 
 アレンジでチーズや野菜を中に入れてもおいしいです。
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-bf34beed.jpg](./images/Attachment-bf34beed.jpg)
 
 フライパンにオリーブオイル（大さじ1）を入れ、中火にし鶏もも肉を入れ転がしながら色付くまで焼く。
 
@@ -154,9 +154,9 @@ Ingredients ―  お送りする食材リスト
 
 あとでオーブンに入れるので、ここでは表面に焼き色がつく程度で大丈夫です。
 
-![Attachment.jpg](./images/Attachment.jpg)
-![Attachment.jpg](./images/Attachment.jpg)
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-6f55d359.jpg](./images/Attachment-6f55d359.jpg)
+![Attachment-180e6ad6.jpg](./images/Attachment-180e6ad6.jpg)
+![Attachment-ec389000.jpg](./images/Attachment-ec389000.jpg)
 
 じゃがいもにオリーブオイル（大さじ1）と皮付きのにんにく、ローズマリー（残りの半量）を和え、耐熱皿にじゃがいもと鶏もも肉、皮付きにんにくをのせ、温めておいたオーブンで15分ほど焼く。
 
@@ -166,7 +166,7 @@ Ingredients ―  お送りする食材リスト
 
 オーブンがない場合は、フライパンで弱中火で10分程度、蓋をしながら鶏肉の中心に火が入るまで焼きます。
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-2057b000.jpg](./images/Attachment-2057b000.jpg)
 
 糸をはずし、鶏もも肉を4等分に切り分ける。
 
@@ -176,7 +176,7 @@ Ingredients ―  お送りする食材リスト
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-9f2a07bb.jpg](./images/Attachment-9f2a07bb.jpg)
 
 ##### ～パスタを作ります～
 
@@ -200,7 +200,7 @@ Ingredients ―  お送りする食材リスト
 
 なるべくきのこを動かさず焼き色をつけてください。
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-2e08f468.jpg](./images/Attachment-2e08f468.jpg)
 
 きのこを取り出し、粗く刻む。
 
@@ -210,19 +210,19 @@ Ingredients ―  お送りする食材リスト
 
 刻んで炒めると水分が出すぎて風味が出にくいので、あとから刻みます。
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-3b323d52.jpg](./images/Attachment-3b323d52.jpg)
 
 フライパンに生クリーム（1本）と刻んだきのこを入れ、一煮立ちさせ、塩（小さじ1/2）を加え、ソースを作る。
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-559ea9bb.jpg](./images/Attachment-559ea9bb.jpg)
 
 沸かしたお湯でスパゲッティーニを4分茹でる。
 
 \
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-57cc2237.jpg](./images/Attachment-57cc2237.jpg)
 
 スパゲッティーニが茹で上がったら、ソースに加え、軽く煮詰め、塩（適量）で味を調える。
 
@@ -232,7 +232,7 @@ Ingredients ―  お送りする食材リスト
 
 煮詰め過ぎたり、塩を入れすぎたときは、パスタの茹で汁を使ってソースを伸ばしてください。
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-1e0f50d1.jpg](./images/Attachment-1e0f50d1.jpg)
 
 火を消し、パルメザンチーズ（2袋）を加え混ぜる。
 
@@ -246,6 +246,6 @@ Ingredients ―  お送りする食材リスト
 
 トリュフソースは火にかけすぎると香りが飛ぶので、最後に加え、軽く和えたら火を止めてください。
 
-![Attachment.jpg](./images/Attachment.jpg)
+![Attachment-12140e5e.jpg](./images/Attachment-12140e5e.jpg)
 
 料理をお召し上がりになった後、今回のメニューのご感想を是非お聞かせください。

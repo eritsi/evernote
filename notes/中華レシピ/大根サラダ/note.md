@@ -41,7 +41,7 @@ guid: 9fa894b9-c582-4045-a8b8-d5918d70209a
 
 大根と人参の量
 
-![Evernote Camera Roll 20161207 085135.jpg](./images/Evernote Camera Roll 20161207 085135.jpg)
+![Evernote Camera Roll 20161207 085135-84d93956.jpg](./images/Evernote Camera Roll 20161207 085135-84d93956.jpg)
 
 塩に浸したところ
 
@@ -49,4 +49,4 @@ guid: 9fa894b9-c582-4045-a8b8-d5918d70209a
 
 中華クラゲ
 
-![Evernote Camera Roll 20161207 085135.jpg](./images/Evernote Camera Roll 20161207 085135.jpg)
+![Evernote Camera Roll 20161207 085135-87c882ac.jpg](./images/Evernote Camera Roll 20161207 085135-87c882ac.jpg)
