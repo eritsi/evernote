@@ -11,7 +11,7 @@ guid: ae804151-61fa-4f0a-95ba-5bd711ecc7ed
 
 \
 
-![Image 20240623 150739.jpeg](./images/Image 20240623 150739.jpeg)
+![Image 20240623 150739.jpeg](./images/Image%2020240623%20150739.jpeg)
 
 （２人前）
 

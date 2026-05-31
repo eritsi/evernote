@@ -30,6 +30,7 @@ import base64
 from pathlib import Path
 from datetime import datetime
 import unicodedata
+from urllib.parse import quote as url_quote
 
 try:
     from markdownify import markdownify as md_convert
@@ -187,7 +188,7 @@ def enml_to_markdown(enml_text: str, resource_map: dict) -> str:
             h = hash_match.group(1)
             if h in resource_map:
                 fname = resource_map[h]
-                return f'\n![{fname}](./images/{fname})\n'
+                return f'\n![{fname}](./images/{url_quote(fname)})\n'
         return ''
 
     text = re.sub(r'<en-media[^>]*/>', replace_en_media, enml_text, flags=re.DOTALL)

@@ -11,7 +11,7 @@ guid: e84b6ce3-20de-4485-a750-616750d527d2
 
 \
 
-![Evernote Camera Roll 20161206 085258.jpg](./images/Evernote Camera Roll 20161206 085258.jpg)
+![Evernote Camera Roll 20161206 085258.jpg](./images/Evernote%20Camera%20Roll%2020161206%20085258.jpg)
 
 \
 

@@ -9,7 +9,7 @@ guid: 3c50c294-f5c1-4e0c-9979-7191965248af
 
 # 蟹味噌チャーハン
 
-![Evernote Camera Roll 20161206 085526.jpg](./images/Evernote Camera Roll 20161206 085526.jpg)
+![Evernote Camera Roll 20161206 085526.jpg](./images/Evernote%20Camera%20Roll%2020161206%20085526.jpg)
 
 \
 

@@ -583,13 +583,16 @@ async function openNote(id) {
     }
     // H1タイトルを除去（メタパネルで表示するため）
     body = body.replace(/^# .+\n?/, '');
+    // markdownify が出力するバックスラッシュ改行を通常の改行に変換
+    body = body.replace(/\\\n/g, '\n');
 
     // カスタムレンダラー（画像URL修正）
     const rd = new marked.Renderer();
     const noteDir = note.note_dir;
     rd.image = (href, title, text) => {
       if (href && /^\.?\/images\//.test(href)) {
-        href = ep(`${noteDir}/images/${href.split('/').pop()}`);
+        const file = decodeURIComponent(href.split('/').pop());
+        href = ep(`${noteDir}/images/${file}`);
       }
       return `<img src="${eh(href)}" alt="${eh(text||'')}" loading="lazy">`;
     };

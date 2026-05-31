@@ -9,7 +9,7 @@ guid: ea6fe7b7-70e2-49f4-9217-d79f2a1054a9
 
 # エビチリ
 
-![Evernote Camera Roll 20161207 084653.jpg](./images/Evernote Camera Roll 20161207 084653.jpg)
+![Evernote Camera Roll 20161207 084653.jpg](./images/Evernote%20Camera%20Roll%2020161207%20084653.jpg)
 
 エビを完全に剥いて背中を開いてワタを取る
 

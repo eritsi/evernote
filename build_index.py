@@ -76,13 +76,19 @@ def main():
             rel_path = str(note_md.relative_to(notes_dir.parent)).replace('\\', '/')
             note_dir_path = str(note_md.parent.relative_to(notes_dir.parent)).replace('\\', '/')
 
-            # 画像ファイルを列挙
+            # 画像ファイルを列挙（サイズ大きい順 → ロゴ・アイコン排除）
             images_dir = note_md.parent / 'images'
             image_files = []
             if images_dir.exists():
-                for img in sorted(images_dir.iterdir()):
-                    if img.suffix.lower() in ('.jpg', '.jpeg', '.png', '.gif', '.webp'):
-                        image_files.append(f'{note_dir_path}/images/{img.name}')
+                candidates = [
+                    img for img in images_dir.iterdir()
+                    if img.suffix.lower() in ('.jpg', '.jpeg', '.png', '.gif', '.webp')
+                ]
+                # 10KB以上を優先。なければ全候補にフォールバック
+                large = [img for img in candidates if img.stat().st_size >= 10_240]
+                ranked = sorted(large or candidates,
+                                key=lambda f: f.stat().st_size, reverse=True)
+                image_files = [f'{note_dir_path}/images/{img.name}' for img in ranked]
 
             tags = meta.get('tags', [])
             if not isinstance(tags, list):

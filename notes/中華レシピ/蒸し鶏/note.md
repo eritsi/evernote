@@ -9,7 +9,7 @@ guid: 864b46f2-a176-41b6-b0fa-da6f5bfceca7
 
 # 蒸し鶏
 
-![Evernote Camera Roll 20161206 085732.jpg](./images/Evernote Camera Roll 20161206 085732.jpg)
+![Evernote Camera Roll 20161206 085732.jpg](./images/Evernote%20Camera%20Roll%2020161206%20085732.jpg)
 
 \
 
@@ -61,6 +61,6 @@ guid: 864b46f2-a176-41b6-b0fa-da6f5bfceca7
 
 \
 
-![Evernote Camera Roll 20161207 084636.jpg](./images/Evernote Camera Roll 20161207 084636.jpg)
+![Evernote Camera Roll 20161207 084636.jpg](./images/Evernote%20Camera%20Roll%2020161207%20084636.jpg)
 
 \
