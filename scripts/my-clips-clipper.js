@@ -5,6 +5,7 @@
 // @description  レシピ・ウェブページをGitHubリポに保存するクリッパー
 // @match        https://*/*
 // @match        http://*/*
+// @exclude      https://finance.yahoo.co.jp/*
 // @exclude      https://raw.githubusercontent.com/*
 // @exclude      https://github.com/*
 // @grant        GM_getValue
